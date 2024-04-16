@@ -6,10 +6,9 @@ NULLABLE = {'blank': True, 'null': True}
 class Category(models.Model):
     category_name = models.CharField(max_length=50, verbose_name='наименование категории')
     cat_desc = models.TextField(max_length=500, verbose_name='описание категории')
-    manufactured_at = models.CharField(max_length=10, verbose_name='дата производства', **NULLABLE)
 
     def __str__(self):
-        return f'{self.category_name} {self.cat_desc}'
+        return f'{self.category_name}'
 
     class Meta:
         verbose_name = 'категория'
@@ -27,8 +26,7 @@ class Product(models.Model):
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
 
     def __str__(self):
-        return (f'{self.product_name} {self.price} {self.prod_desc} {self.price} '
-                f'{self.created_at} {self.updated_at}')
+        return f'{self.product_name} {self.category} {self.price}'
 
     class Meta:
         verbose_name = 'продукт'
