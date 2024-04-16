@@ -6,6 +6,7 @@ NULLABLE = {'blank': True, 'null': True}
 class Category(models.Model):
     category_name = models.CharField(max_length=50, verbose_name='наименование категории')
     cat_desc = models.TextField(max_length=500, verbose_name='описание категории')
+    manufactured_at = models.CharField(max_length=10, verbose_name='дата производства', **NULLABLE)
 
     def __str__(self):
         return f'{self.category_name} {self.cat_desc}'
