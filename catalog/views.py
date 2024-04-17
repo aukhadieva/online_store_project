@@ -4,6 +4,9 @@ from django.shortcuts import render
 
 
 def index(request):
+    if request.method == 'POST':
+        review = request.POST.get('review')
+        print(review)
     return render(request, 'catalog/index.html')
 
 

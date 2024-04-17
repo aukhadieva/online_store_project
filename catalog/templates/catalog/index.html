@@ -14,14 +14,13 @@
     top: 0;
     padding: 10px;
     z-index: 3;
-    background-color: rgb(255,255,255, 0.8);
+    background-color: rgb(169,169,169, 0.3);
 
 }
 
     body {
     height: 100vh;
     margin: 0;
-    background: url('/static/catalog/images/img_2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     overflow-x: auto;
@@ -45,7 +44,7 @@
     <header class="p-3 mb-3 border-bottom">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                <a href="" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
                     <img src="/static/catalog/images/book.png" alt="logo" width="60" height="54">
                     <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"></svg>
                 </a>
@@ -62,24 +61,124 @@
         </div>
     </header>
 
+
     <main class="main">
-        <div class="p-1 text-center bg-white p-2" style="--bs-bg-opacity: .5;">
-            <div class="container py-5">
-                <h1 class="text-body-emphasis">Книг много не бывает!</h1>
-                <p class="col-lg-8 mx-auto lead">
-                <h5>Только до конца апреля -30% на все!</h5>
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card">
+                        <img src="/static/catalog/images/issue1.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Заголовок карточки</h5>
+                            <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
+                                естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+                            <br>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <textarea name="review" class="form-control" placeholder="Рецензия на книгу"
+                                              id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-secondary form-control">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="/static/catalog/images/issue2.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Заголовок карточки</h5>
+                            <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
+                                естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+                            <br>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <textarea name="review" class="form-control" placeholder="Рецензия на книгу"
+                                              id="exampleFormControlTextarea2" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-secondary form-control">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="/static/catalog/images/issue0.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Заголовок карточки</h5>
+                            <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
+                                естественного перехода к дополнительному контенту.</p>
+                            <br>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <textarea name="review" class="form-control" placeholder="Рецензия на книгу"
+                                              id="exampleFormControlTextarea3" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-secondary form-control">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="/static/catalog/images/issue4.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Заголовок карточки</h5>
+                            <p class="card-text">Это более длинная карта С вспомогательным текстом ниже в качестве
+                                естественного перехода к дополнительному контенту.</p>
+                            <br>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <textarea name="review" class="form-control" placeholder="Рецензия на книгу"
+                                              id="exampleFormControlTextarea4" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-secondary form-control">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-warning px-5 mb-5" type="button">
-                За покупками
-            </button>
+
         </div>
     </main>
 
-    <footer class="footer mt-auto py-3">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="container">
-            <span class="text-body-secondary">ООО «Книжный», 2024</span>
+            <div class="row">
+                <div class="col-12 col-md">
+                    ООО Книжный
+                    <small class="d-block mb-3 text-muted">&copy; 2024</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h6>Покупателям</h6>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Оплата и доставка</a></li>
+                        <li><a class="text-muted" href="#">Правила возврата</a></li>
+                        <li><a class="text-muted" href="#">Частые вопросы</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h6>Дополнительно</h6>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Мы пишем</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h6>О нас</h6>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="/contacts/">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </footer>
+
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
