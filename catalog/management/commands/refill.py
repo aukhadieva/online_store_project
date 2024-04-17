@@ -8,7 +8,7 @@ from catalog.models import Category, Product
 class Command(BaseCommand):
 
     @staticmethod
-    def json_read_categories():
+    def json_read_categories() -> list[dict]:
         """
         Получает данные из фикстур с категориями.
         """
@@ -20,7 +20,7 @@ class Command(BaseCommand):
             return commands_list
 
     @staticmethod
-    def json_read_products():
+    def json_read_products() -> list[dict]:
         """
         Получает данные из фикстур с продуктами.
         """
@@ -31,7 +31,7 @@ class Command(BaseCommand):
                 commands_list.append(item)
             return commands_list
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         """
         Заполняет данные в базу данных, предварительно зачистив ее от старых данных.
         """
