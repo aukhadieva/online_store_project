@@ -1,0 +1,16 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "product_name": "Sapiens",
+      "prod_desc": "Краткая история человечества",
+      "image": "",
+      "category_id": 43,
+      "price": 1000,
+      "created_at": "2024-04-17T02:37:42.356Z",
+      "updated_at": "2024-04-17T02:37:42.356Z",
+      "in_stock": true
+    }
+  }
+]
