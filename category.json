@@ -3,32 +3,32 @@
     "model": "catalog.category",
     "pk": 1,
     "fields": {
-      "category_name": "фэнтези",
-      "cat_desc": "героическое зарубежное фэнтези"
+      "category_name": "классика",
+      "cat_desc": "современная отечественная проза"
     }
   },
   {
     "model": "catalog.category",
     "pk": 2,
     "fields": {
-      "category_name": "классика",
-      "cat_desc": "классическая отечественная проза"
+      "category_name": "нон-фикшн",
+      "cat_desc": "научная литература"
     }
   },
   {
     "model": "catalog.category",
     "pk": 3,
     "fields": {
-      "category_name": "нон-фикшн",
-      "cat_desc": "концепция современного естествознания"
+      "category_name": "фэнтези",
+      "cat_desc": "героическое зарубежное фэнтези"
     }
   },
   {
     "model": "catalog.category",
     "pk": 4,
     "fields": {
-      "category_name": "нон-фикшн",
-      "cat_desc": "культурология, искусствоведение"
+      "category_name": "биография",
+      "cat_desc": "мемуары"
     }
   }
 ]
