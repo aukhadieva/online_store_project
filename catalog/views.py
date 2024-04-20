@@ -7,7 +7,7 @@ from catalog.models import Contact, Product
 
 def index(request):
     product = [product.product_name for product in Product.objects.all()]
-    products = product[0:5]
+    products = product[-5:]
     return render(request, 'catalog/index.html', context={'products': products})
 
 
