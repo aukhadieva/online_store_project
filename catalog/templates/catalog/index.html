@@ -7,14 +7,14 @@
 <div class="row mt-5">
     <h2>Топ 5 популярных книг</h2>
     <table class="table">
-  <tbody>
-  {% for item in product %}
-    <tr>
-      <td>{{item.product_name}}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+        <tbody>
+        {% for item in products %}
+        <tr>
+            <td>{{item}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <div class="row mt-5"></div>
