@@ -21,8 +21,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', verbose_name='изображение', **NULLABLE)
     category = models.ForeignKey(Category, null=False, on_delete=models.PROTECT)
     price = models.IntegerField(verbose_name='цена')
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='дата создания')
+    updated_at = models.DateTimeField(auto_now=True, editable=False, verbose_name='дата изменения')
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
 
     def __str__(self):
