@@ -6,10 +6,9 @@ from catalog.models import Contact, Product
 
 
 def index(request):
-    # product = [product.product_name for product in Product.objects.all()]
-    # products = product[0:5]
-    product = Product.objects.all()
-    return render(request, 'catalog/index.html', context={'product': product})
+    product = [product.product_name for product in Product.objects.all()]
+    products = product[0:5]
+    return render(request, 'catalog/index.html', context={'products': products})
 
 
 def contacts(request):
