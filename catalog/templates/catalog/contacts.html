@@ -1,157 +1,84 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Главная страница</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+{% extends 'base.html' %}
 
-<style>
-    header {
-    position: sticky;
-    top: 0;
-    padding: 10px;
-    z-index: 3;
-    background-color: rgb(169,169,169, 0.3);
+{% block title %}Обратная связь{% endblock %}
 
-}
-
-    body {
-    height: 100vh;
-    margin: 0;
-    overflow-x: auto;
-}
-    .wrapper {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    }
-
-    .main {
-    padding: 30px;
-    flex: 1 1 auto;
-    }
-
-</style>
-
-<body>
-
-<div class="wrapper">
-    <header class="p-3 mb-3 border-bottom">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                    <img src="/static/catalog/images/book.png" alt="logo" width="60" height="54">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"></svg>
-                </a>
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="/" class="nav-link px-2 link-body-emphasis">Главная</a></li>
-                    <li><a href="#" class="nav-link px-2 link-body-emphasis">Каталог</a></li>
-                    <li><a href="#" class="nav-link px-2 link-body-emphasis">Акции</a></li>
-                    <li><a href="{% url 'contacts' %}" class="nav-link px-2 link-body-emphasis">Обратная связь</a></li>
-                </ul>
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control" placeholder="Найти книгу..." aria-label="Search">
+{% block content %}
+<div class="row mt-5">
+    <div class="col-6">
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/static/catalog/images/1.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/catalog/images/2.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/catalog/images/3.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Обратная связь</h4>
+                <p>Если у вас есть идеи, пожелания, замечания — пишите! И мы сделаем все, чтобы стать
+                    лучше.</p>
+                <br>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input name="name" type="text" class="form-control" placeholder="Имя"
+                               aria-describedby="nameHelp">
+                    </div>
+                    <div class="mb-3">
+                        <input name="email" type="email" placeholder="Email" class="form-control"
+                               id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                                    <textarea name="message" class="form-control" placeholder="Сообщение"
+                                              id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-secondary form-control">Отправить</button>
                 </form>
             </div>
         </div>
-    </header>
-
-    <main class="main">
-        <div class="container">
-            <div class="row mt-5">
-                <div class="col-6">
-                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="/static/catalog/images/1.jpg" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/static/catalog/images/2.jpg" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/static/catalog/images/3.jpg" class="d-block w-100" alt="...">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Предыдущий</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Следующий</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Обратная связь</h4>
-                            <p>Если у вас есть идеи, пожелания, замечания — пишите! И мы сделаем все, чтобы стать
-                                лучше.</p>
-                            <br>
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <input name="name" type="text" class="form-control" placeholder="Имя"
-                                           aria-describedby="nameHelp">
-                                </div>
-                                <div class="mb-3">
-                                    <input name="email" type="email" placeholder="Email" class="form-control"
-                                           id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="mb-3">
-                                    <textarea name="message" class="form-control" placeholder="Сообщение"
-                                              id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-secondary form-control">Отправить</button>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md">
-                    ООО Книжный
-                    <small class="d-block mb-3 text-muted">&copy; 2024</small>
-                </div>
-                <div class="col-6 col-md">
-                    <h6>Покупателям</h6>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Оплата и доставка</a></li>
-                        <li><a class="text-muted" href="#">Правила возврата</a></li>
-                        <li><a class="text-muted" href="#">Частые вопросы</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md">
-                    <h6>Дополнительно</h6>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Мы пишем</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md">
-                    <h6>О нас</h6>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="/contacts/">Контакты</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+<div class="row mt-5">
+    <h1>Обращения</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Обращение</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in contact %}
+        <tr>
+            <th scope="row">{{item.pk}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.message}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
