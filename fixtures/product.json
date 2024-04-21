@@ -1,0 +1,72 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "product_name": "Sapiens, Юваль Ной Харари",
+        "prod_desc": "Краткая история человечества",
+        "image": "",
+        "category": 2,
+        "price": 1000,
+        "created_at": "2024-04-17T10:06:52.757Z",
+        "updated_at": "2024-04-20T12:17:11.848Z",
+        "in_stock": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 13,
+    "fields": {
+        "product_name": "Автобиография, Агата Кристи",
+        "prod_desc": "\"Автобиография\", над которой Агата Кристи работала полтора десятка лет, оказалась не менее увлекательной и популярной, чем ее детективы.",
+        "image": "",
+        "category": 4,
+        "price": 500,
+        "created_at": "2024-04-20T12:09:45.710Z",
+        "updated_at": "2024-04-20T12:16:45.840Z",
+        "in_stock": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 14,
+    "fields": {
+        "product_name": "12 стульев, Ильф и Петров",
+        "prod_desc": "Роман Ильи Ильфа и Евгения Петрова, написанный в 1927 году и являющийся первой совместной работой соавторов.",
+        "image": "",
+        "category": 1,
+        "price": 700,
+        "created_at": "2024-04-20T12:11:50.199Z",
+        "updated_at": "2024-04-20T12:17:35.435Z",
+        "in_stock": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 15,
+    "fields": {
+        "product_name": "Шестерка воронов, Ли Бардуго",
+        "prod_desc": "Роман молодой американской писательницы Ли Бардуго",
+        "image": "",
+        "category": 3,
+        "price": 900,
+        "created_at": "2024-04-20T12:14:32.947Z",
+        "updated_at": "2024-04-20T12:17:19.871Z",
+        "in_stock": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 16,
+    "fields": {
+        "product_name": "Полторы комнаты",
+        "prod_desc": "Полторы комнаты - одно из самых известных эссе Иосифа Бродского, великого поэта, переводчика, драматурга, лауреата Нобелевской премии по литературе (1987).",
+        "image": "catalog/products/15.jpg",
+        "category": 1,
+        "price": 300,
+        "created_at": "2024-04-20T12:26:36.382Z",
+        "updated_at": "2024-04-21T08:23:05.754Z",
+        "in_stock": true
+    }
+}
+]

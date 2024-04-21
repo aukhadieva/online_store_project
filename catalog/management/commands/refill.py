@@ -12,7 +12,7 @@ class Command(BaseCommand):
         """
         Получает данные из фикстур с категориями.
         """
-        with open('category.json') as j_file:
+        with open('fixtures/category.json') as j_file:
             load_categories = json.load(j_file)
             commands_list = []
             for item in load_categories:
@@ -24,7 +24,7 @@ class Command(BaseCommand):
         """
         Получает данные из фикстур с продуктами.
         """
-        with open('product.json') as j_file:
+        with open('fixtures/product.json') as j_file:
             load_products = json.load(j_file)
             commands_list = []
             for item in load_products:
@@ -49,7 +49,8 @@ class Command(BaseCommand):
         Category.objects.bulk_create(categories_for_create)
 
         for products in Command.json_read_products():
-            product_for_create.append(Product(id=products["pk"], category=Category.objects.get(pk=2),
+            product_for_create.append(Product(id=products["pk"],
+                                              category=Category.objects.get(pk=products['fields']['category']),
                                               in_stock=products['fields']['in_stock'],
                                               price=products['fields']['price'],
                                               prod_desc=products['fields']['prod_desc'],
