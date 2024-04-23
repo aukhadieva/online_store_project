@@ -26,7 +26,7 @@ class Product(models.Model):
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
 
     def __str__(self):
-        return f'{self.product_name} {self.category} {self.price}'
+        return f'{self.product_name} {self.category} {self.price} {self.prod_desc}'
 
     class Meta:
         verbose_name = 'продукт'
