@@ -30,28 +30,30 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Обратная связь</h4>
-                <p>Если у вас есть идеи, пожелания, замечания — пишите! И мы сделаем все, чтобы стать
-                    лучше.</p>
-                <br>
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <input name="name" type="text" class="form-control" placeholder="Имя"
-                               aria-describedby="nameHelp">
-                    </div>
-                    <div class="mb-3">
-                        <input name="email" type="email" placeholder="Email" class="form-control"
-                               id="exampleInputEmail1" aria-describedby="emailHelp">
-                    </div>
-                    <div class="mb-3">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Обратная связь</h4>
+                    <p>Если у вас есть идеи, пожелания, замечания — пишите! И мы сделаем все, чтобы стать
+                        лучше.</p>
+                    <br>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input name="name" type="text" class="form-control" placeholder="Имя"
+                                   aria-describedby="nameHelp">
+                        </div>
+                        <div class="mb-3">
+                            <input name="email" type="email" placeholder="Email" class="form-control"
+                                   id="exampleInputEmail1" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
                                     <textarea name="message" class="form-control" placeholder="Сообщение"
                                               id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-secondary form-control">Отправить</button>
-                </form>
+                        </div>
+                        <button type="submit" class="btn btn-secondary form-control">Отправить</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
