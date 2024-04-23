@@ -1,14 +1,12 @@
 import json
 
-from django.shortcuts import render
-
+from django.shortcuts import render, get_object_or_404
 from catalog.models import Contact, Product
 
 
 def index(request):
-    product = [product.product_name for product in Product.objects.all()]
-    products = product[-5:]
-    return render(request, 'catalog/index.html', context={'products': products})
+    context = {'object_list': Product.objects.all()}
+    return render(request, 'catalog/index.html', context)
 
 
 def contacts(request):
@@ -21,3 +19,8 @@ def contacts(request):
         with open('contacts_data.json', 'w') as j_file:
             json.dump(contacts_dict, j_file, indent=4, ensure_ascii=False)
     return render(request, 'catalog/contacts.html', context={'contact': contact})
+
+
+def product(request, product_id):
+    object = get_object_or_404(Product, pk=product_id)
+    return render(request, 'catalog/product.html', {'object': object})

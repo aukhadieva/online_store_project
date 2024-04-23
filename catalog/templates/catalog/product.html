@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-6">
+        <img src="media/{{ object.image }}" class="d-block w-100" alt="...">
+    </div>
+    <div class="col-6">
+        <br>
+        <h3>{{ object.product_name }}</h3>
+        <h6>{{ object.category }}</h6>
+        <br>
+        <p>{{ object.prod_desc }}</p>
+        <br>
+        <h3>{{ object.price }} руб.</h3>
+        <br>
+        <h6>
+            {% if object.in_stock %}
+            {{ "В наличии" }}
+            <br>
+            <br>
+            <button class="btn btn-outline-success" type="button">В корзину</button>
+            {% else %}
+            {{ "Нет в наличии" }}
+            {% endif %}
+        </h6>
+    </div>
+</div>
+
+{% endblock %}
