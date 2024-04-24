@@ -35,7 +35,7 @@
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Обратная связь</h4>
+                    <h3 class="card-title">Обратная связь</h3>
                     <p>Если у вас есть идеи, пожелания, замечания — пишите! И мы сделаем все, чтобы стать
                         лучше.</p>
                     <br>
@@ -62,27 +62,28 @@
 </div>
 
 <div class="row mt-5">
-    <h2>Обращения</h2>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Обращение</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in contact %}
-        <tr>
-            <th scope="row">{{item.pk}}</th>
-            <td>{{item.name}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.message}}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h3>Обращения</h3>
+    <div class="col-6">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Обращение</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in contact %}
+            <tr>
+                <th scope="row">{{item.pk}}</th>
+                <td>{{item.name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.message}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}
