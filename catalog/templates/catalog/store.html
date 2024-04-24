@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row mb-5">
+
+    <div class="col-lg-2">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Элемент</li>
+            <li class="list-group-item">Второй элемент</li>
+            <li class="list-group-item">Третий элемент</li>
+            <li class="list-group-item">Четвертый элемент</li>
+            <li class="list-group-item">И пятый</li>
+        </ul>
+    </div>
+
+    <div class="col-lg-10">
+        <div class="card-group">
+            {% for product in page_object %}
+            <div class="card">
+                <img src="{% my_media product.image %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.product_name }}</h5>
+                    <a href={% url "catalog:product" product.id%} class="btn btn-outline-success">Купить</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<nav aria-label="Навигация по страницам">
+    <ul class="pagination justify-content-end">
+        <li class="page-item">
+            {% if page_object.has_previous %}
+            <a class="page-link text-body-secondary" href="{% if page_object.has_previous %} {% url 'catalog:paginator' page_object.previous_page_number%}
+                   {% else %} # {% endif %}" aria-label="Предыдущая">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+            {% endif %}
+        </li>
+        {% for page in page_object.paginator.page_range %}
+        <li class="page-item"><a class="page-link text-body-secondary"
+                                 href="{% url 'catalog:paginator' page %}">{{ page }}</a></li>
+        {% endfor %}
+        <li class="page-item">
+            {% if page_object.has_next %}
+            <a class="page-link text-body-secondary" href="{% if page_object.has_next %} {% url 'catalog:paginator' page_object.next_page_number %}
+                   {% else %} # {% endif %}" aria-label="Следующая">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+{% endblock %}
