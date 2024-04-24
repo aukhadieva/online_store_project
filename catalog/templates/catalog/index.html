@@ -1,13 +1,9 @@
 {% extends 'base.html' %}
-
+{% load my_tags %}
 {% load static %}
-
-{% block title %}Главная страница{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-
-{% load my_tags %}
-
 <div class="p-2 mb-4 bg-body-tertiary rounded-3">
     <div class="container">
         <div class="row">
@@ -96,5 +92,4 @@
         {% endfor %}
     </div>
 </div>
-
 {% endblock %}

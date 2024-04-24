@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}{{ object.product_name }}{% endblock %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-6">
         <img src="media/{{ object.image }}" class="d-block w-100" alt="...">
@@ -27,5 +27,4 @@
         </h6>
     </div>
 </div>
-
 {% endblock %}

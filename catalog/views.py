@@ -6,7 +6,8 @@ from catalog.models import Contact, Product, Category
 
 
 def index(request):
-    context = {'object_list': Product.objects.all()[:3],
+    context = {'title': 'Главная',
+               'object_list': Product.objects.all()[:3],
                'category_list': Category.objects.all()}
     if request.method == 'POST':
         product_name = request.POST.get('product_name')
@@ -23,7 +24,8 @@ def index(request):
 
 
 def contacts(request):
-    contact = Contact.objects.all()
+    context = {'title': 'Обратная связь',
+               'contact': Contact.objects.all()}
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -31,7 +33,7 @@ def contacts(request):
         contacts_dict = {'contacts_data': [{'name': name, 'email': email, 'message': message}]}
         with open('contacts_data.json', 'w') as j_file:
             json.dump(contacts_dict, j_file, indent=4, ensure_ascii=False)
-    return render(request, 'catalog/contacts.html', context={'contact': contact})
+    return render(request, 'catalog/contacts.html', context)
 
 
 def product(request, product_id):
