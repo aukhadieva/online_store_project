@@ -1,11 +1,12 @@
 import json
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from catalog.models import Contact, Product, Category
 
 
 def index(request):
-    context = {'object_list': Product.objects.all()[:6],
+    context = {'object_list': Product.objects.all()[:3],
                'category_list': Category.objects.all()}
     if request.method == 'POST':
         product_name = request.POST.get('product_name')
@@ -36,3 +37,13 @@ def contacts(request):
 def product(request, product_id):
     object = get_object_or_404(Product, pk=product_id)
     return render(request, 'catalog/product.html', {'object': object})
+
+
+def listing(request, page_number=1):
+    product_list = Product.objects.all()
+    paginator = Paginator(product_list, 3)
+    page_object = paginator.get_page(page_number)
+    context = {'title': 'Каталог',
+               'product_list': product_list,
+               'page_object': page_object}
+    return render(request, 'catalog/store.html', context)
