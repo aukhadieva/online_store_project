@@ -6,13 +6,12 @@
 <div class="row mb-5">
 
     <div class="col-lg-2">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Элемент</li>
-            <li class="list-group-item">Второй элемент</li>
-            <li class="list-group-item">Третий элемент</li>
-            <li class="list-group-item">Четвертый элемент</li>
-            <li class="list-group-item">И пятый</li>
-        </ul>
+        {% for category in category_list %}
+        <div class="list-group">
+            <a href={% url "catalog:category" category.id%}
+            class="list-group list-group-item-action">{{ category.category_name }}</a>
+        </div>
+        {% endfor %}
     </div>
 
     <div class="col-lg-10">

@@ -41,11 +41,18 @@ def product(request, product_id):
     return render(request, 'catalog/product.html', {'object': object})
 
 
-def listing(request, page_number=1):
-    product_list = Product.objects.all()
-    paginator = Paginator(product_list, 3)
+def listing(request, category_id=None, page_number=1):
+    category_list = Category.objects.all()
+    if category_id:
+        category = Category.objects.get(id=category_id)
+        products = Product.objects.filter(category=category)
+    else:
+        products = Product.objects.all()
+
+    paginator = Paginator(products, 3)
     page_object = paginator.get_page(page_number)
+
     context = {'title': 'Каталог',
-               'product_list': product_list,
+               'category_list': category_list,
                'page_object': page_object}
     return render(request, 'catalog/store.html', context)
