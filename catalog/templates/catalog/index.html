@@ -20,7 +20,7 @@
                 <button class="btn btn-outline-success" type="button">За покупками!</button>
             </div>
             <div class="col-4">
-                <img src="{% static 'images/sale_0.jpg' %}" height="250" class="card-img-top" alt="...">
+                <img src="{% static 'catalog/images/sale_0.jpg' %}" height="250" class="card-img-top" alt="...">
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
     <div class="row">
         <h2 class="display-5" style="color:Black">Garage Sale</h2>
         <div class="col-6">
-            <img src="{% static 'images/Garage_Sale.JPG' %}" class="card-img-top" alt="...">
+            <img src="{% static 'catalog/images/Garage_Sale.JPG' %}" class="card-img-top" alt="...">
         </div>
         <div class="col-6">
             <div class="card">
@@ -55,7 +55,7 @@
                             <input type="number" name="price" class="form-control" placeholder="Стоимость">
                         </div>
                         <div class="form-group mb-3">
-                            <select class="form-control" name="category">
+                            <select class="form-select" id="validationCustom04" name="category">
                                 {% for object in category_list %}
                                 <option>{{ object }}</option>
                                 {% endfor %}
