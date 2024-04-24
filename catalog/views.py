@@ -1,11 +1,23 @@
 import json
 
 from django.shortcuts import render, get_object_or_404
-from catalog.models import Contact, Product
+from catalog.models import Contact, Product, Category
 
 
 def index(request):
-    context = {'object_list': Product.objects.all()}
+    context = {'object_list': Product.objects.all()[:6],
+               'category_list': Category.objects.all()}
+    if request.method == 'POST':
+        product_name = request.POST.get('product_name')
+        price = request.POST.get('price')
+        category = request.POST.get('category')
+        category_id = Category.objects.get(category_name=category).id
+        prod_desc = request.POST.get('prod_desc')
+        new_book = Product.objects.create(product_name=product_name,
+                                          price=price,
+                                          category=Category.objects.get(pk=category_id),
+                                          prod_desc=prod_desc)
+        new_book.save()
     return render(request, 'catalog/index.html', context)
 
 

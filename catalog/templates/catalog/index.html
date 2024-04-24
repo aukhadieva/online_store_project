@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
@@ -18,14 +20,63 @@
                 <button class="btn btn-outline-success" type="button">За покупками!</button>
             </div>
             <div class="col-4">
-                <img src="/static/catalog/images/sale_0.jpg" height="250" class="card-img-top" alt="...">
+                <img src="{% static 'images/sale_0.jpg' %}" height="250" class="card-img-top" alt="...">
             </div>
         </div>
     </div>
 </div>
 <br>
 
-<h2 class="display-5" align="center" style="color:Black">Выбор покупателей</h2>
+<div class="container mb-5">
+    <div class="row">
+        <h2 class="display-5" style="color:Black">Garage Sale</h2>
+        <div class="col-6">
+            <img src="{% static 'images/Garage_Sale.JPG' %}" class="card-img-top" alt="...">
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Как продать свои книги?</h4>
+                    <br>
+                    <h6><b>Выберите ненужные книги дома</b></h6>
+                    <p>Приготовьте ваши прочитанные книги в хорошем состоянии.
+                        К распродаже принимаются современные книги любых жанров для детей и взрослых.</p>
+                    <h6><b>Заполните карточку участника</b></h6>
+                    <p>В карточке необходимо указать наименование, автора, стоимость, выбрать категорию из
+                        выпадающего списка, а также описать сюжет вашей книги.</p>
+                    <br>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <input type="text" name="product_name" class="form-control"
+                                   placeholder="Наименование книги и автор">
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="number" name="price" class="form-control" placeholder="Стоимость">
+                        </div>
+                        <div class="form-group mb-3">
+                            <select class="form-control" name="category">
+                                {% for object in category_list %}
+                                <option>{{ object }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <textarea name="prod_desc" class="form-control" placeholder="Описание"
+                                      id="exampleFormControlTextarea1" rows="4"></textarea>
+                        </div>
+                        <div class="button">
+                            <button type="submit" class="btn btn-secondary form-control">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<h3 class="display-5" align="center" style="color:Black">Выбор покупателей</h3>
 <br>
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
