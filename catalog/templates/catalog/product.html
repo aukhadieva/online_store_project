@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load my_tags %}
 {% block title %}{{ object.product_name }}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-6">
-        <img src="media/{{ object.image }}" class="d-block w-100" alt="...">
+        <img src="{% my_media object.image %}" class="d-block w-100" alt="...">
     </div>
     <div class="col-6">
         <br>
