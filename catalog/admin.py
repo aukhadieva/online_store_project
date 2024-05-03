@@ -23,6 +23,6 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'body', 'is_published', 'views_count',)
+    list_display = ('id', 'title', 'is_published', 'views_count',)
     search_fields = ('title', 'body',)
     list_filter = ('is_published',)
