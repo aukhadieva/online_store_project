@@ -2,7 +2,7 @@ import json
 
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 
 from catalog.models import Contact, Product, Category
 
@@ -42,18 +42,6 @@ class ProductDetailView(DetailView):
     model = Product
 
 
-def listing(request, category_id=None, page_number=1):
-    category_list = Category.objects.all()
-    if category_id:
-        category = Category.objects.get(id=category_id)
-        products = Product.objects.filter(category=category)
-    else:
-        products = Product.objects.all()
-
-    paginator = Paginator(products, 3)
-    page_object = paginator.get_page(page_number)
-
-    context = {'title': 'Каталог',
-               'category_list': category_list,
-               'page_object': page_object}
-    return render(request, 'catalog/store.html', context)
+class ProductListView(ListView):
+    model = Product
+    paginate_by = 3
