@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load my_tags %}
 {% block title %}Блог{% endblock %}
 
 {% block content %}
@@ -22,7 +22,7 @@
                 </a>
             </div>
             <div class="col-4">
-                <img src="media/{{ object.img_preview }}" height="250" class="card-img-top">
+                <img src="{% my_media object.img_preview %}" height="250" class="card-img-top">
             </div>
         </div>
         {% endfor %}

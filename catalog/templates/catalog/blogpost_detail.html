@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load my_tags %}
 {% block title %}{{ object.title }}{% endblock%}
 
 {% block content %}
@@ -23,7 +23,7 @@
         <div class="col-1">
         </div>
         <div class="col-4">
-            <img src="media/{{ object.img_preview }}" class="d-block w-100" alt="...">
+            <img src="{% my_media object.img_preview %}" class="d-block w-100" alt="...">
         </div>
     </div>
 </article>
