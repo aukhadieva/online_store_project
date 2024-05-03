@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 PSQL_PASSWORD = os.getenv('PASSWORD')
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -130,3 +131,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'olyaramilya@yandex.ru'
+EMAIL_HOST_PASSWORD = MAIL_PASSWORD
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

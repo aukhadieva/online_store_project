@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Блог{% endblock %}
+
+{% block content %}
+<h2 class="display-5 link-body-emphasis mb-1">Наши тексты</h2>
+<br>
+
+<div class="row ">
+    <div class="row row-cols-1">
+        {% for object in object_list %}
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static me-2">
+                <h3 class="mb-0">{{ object.title }}</h3>
+                <div class="mb-1 text-body-secondary">{{ object.created_at.date }}</div>
+                <p class="card-text mb-auto">{{ object.body|truncatechars:200 }}</p>
+                <a href={% url 'catalog:view_post' object.pk %} class="icon-link gap-1 icon-link-hover stretched-link">
+                Читать полностью
+                <svg class="bi">
+                    <use xlink:href="#chevron-right"/>
+                </svg>
+                </a>
+            </div>
+            <div class="col-4">
+                <img src="media/{{ object.img_preview }}" height="250" class="card-img-top">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<br>
+<hr>
+
+<div class="p-4">
+    <h4 class="fst-italic">Archives</h4>
+    <ol class="list-unstyled mb-0">
+        <li><a href="#">March 2021</a></li>
+        <li><a href="#">February 2021</a></li>
+        <li><a href="#">January 2021</a></li>
+        <li><a href="#">December 2020</a></li>
+        <li><a href="#">November 2020</a></li>
+        <li><a href="#">October 2020</a></li>
+        <li><a href="#">September 2020</a></li>
+        <li><a href="#">August 2020</a></li>
+        <li><a href="#">July 2020</a></li>
+        <li><a href="#">June 2020</a></li>
+        <li><a href="#">May 2020</a></li>
+        <li><a href="#">April 2020</a></li>
+    </ol>
+</div>
+
+{% endblock %}

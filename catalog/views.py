@@ -1,8 +1,10 @@
-import json
+from django.core.mail import send_mail, EmailMessage
+from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
+from pytils.templatetags.pytils_translit import slugify
 
-from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
-from catalog.models import Contact, Product, Category
+from catalog.models import Contact, Product, Category, BlogPost
 
 
 def index(request):
@@ -23,36 +25,67 @@ def index(request):
     return render(request, 'catalog/index.html', context)
 
 
-def contacts(request):
-    context = {'title': 'Обратная связь',
-               'contact': Contact.objects.all()}
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        contacts_dict = {'contacts_data': [{'name': name, 'email': email, 'message': message}]}
-        with open('contacts_data.json', 'w') as j_file:
-            json.dump(contacts_dict, j_file, indent=4, ensure_ascii=False)
-    return render(request, 'catalog/contacts.html', context)
+class ContactTemplateView(TemplateView):
+    template_name = 'catalog/contacts.html'
+
+    def post(self, request):
+        if self.request.method == 'POST':
+            name = self.request.POST.get('name')
+            email = self.request.POST.get('email')
+            message = self.request.POST.get('message')
+            new_contact = Contact.objects.create(name=name, email=email, message=message)
+            new_contact.save()
+        return render(self.request, self.template_name)
 
 
-def product(request, product_id):
-    object = get_object_or_404(Product, pk=product_id)
-    return render(request, 'catalog/product.html', {'object': object})
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def listing(request, category_id=None, page_number=1):
-    category_list = Category.objects.all()
-    if category_id:
-        category = Category.objects.get(id=category_id)
-        products = Product.objects.filter(category=category)
-    else:
-        products = Product.objects.all()
+class ProductListView(ListView):
+    model = Product
+    paginate_by = 3
 
-    paginator = Paginator(products, 3)
-    page_object = paginator.get_page(page_number)
 
-    context = {'title': 'Каталог',
-               'category_list': category_list,
-               'page_object': page_object}
-    return render(request, 'catalog/store.html', context)
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    fields = ('title', 'body', 'img_preview',)
+    success_url = reverse_lazy('catalog:posts')
+
+
+class BlogPostListView(ListView):
+    model = BlogPost
+    
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
+
+class BlogPostDetailView(DetailView):
+    model = BlogPost
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        if self.object.views_count == 100:
+            send_mail('Поздравляем!',
+                      'Ваш пост набрал 100 просмотров!',
+                      'olyaramilya@yandex.ru',
+                      ['olyaramilya@yandex.ru', 'sarole4ka@gmail.com'],
+                      fail_silently=False,)
+        return self.object
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    fields = ('title', 'body', 'img_preview',)
+
+    def get_success_url(self):
+        return reverse('catalog:view_post', args=[self.kwargs.get('pk')])
+
+
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    success_url = reverse_lazy('catalog:posts')
