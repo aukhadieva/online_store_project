@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="row mb-5">
-    <div class="col-lg-10">
+
+    <div class="col-lg-12">
         <div class="card-group">
             {% for object in object_list %}
             <div class="card">
@@ -19,6 +20,7 @@
     </div>
 </div>
 
+{% if page_obj.has_other_pages %}
 <div class="pagination justify-content-end">
     <nav aria-label="Навигация по страницам">
         <ul class="pagination justify-content-end">
@@ -50,4 +52,5 @@
         </ul>
     </nav>
 </div>
+{% endif %}
 {% endblock %}
