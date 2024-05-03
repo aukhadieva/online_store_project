@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, ListView, CreateView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView
 
 from catalog.models import Contact, Product, Category, BlogPost
 
@@ -58,3 +58,9 @@ class BlogPostListView(ListView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    fields = ('title', 'body', 'img_preview',)
+    success_url = reverse_lazy('catalog:posts')

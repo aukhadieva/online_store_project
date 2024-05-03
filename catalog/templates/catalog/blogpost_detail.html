@@ -9,6 +9,7 @@
     <br>
     <div class="row">
         <div class="col-7">
+            <a href={% url 'catalog:edit_post' object.pk %}>Редактировать пост</a>
             <p>{{ object.body }}</p>
         </div>
         <div class="col-1">

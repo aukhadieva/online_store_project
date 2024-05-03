@@ -14,7 +14,13 @@
                         {% csrf_token %}
                         {{ form.as_p }}
                         <div class="button">
-                            <button type="submit" class="btn btn-secondary ">Отправить</button>
+                            <button type="submit" class="btn btn-secondary ">
+                                {% if object %}
+                                Сохранить
+                                {% else %}
+                                Создать
+                                {% endif %}
+                            </button>
                         </div>
                     </form>
                 </div>
