@@ -2,7 +2,7 @@ import json
 
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 
 from catalog.models import Contact, Product, Category
 
@@ -38,9 +38,8 @@ class ContactTemplateView(TemplateView):
         return render(self.request, self.template_name)
 
 
-def product(request, product_id):
-    object = get_object_or_404(Product, pk=product_id)
-    return render(request, 'catalog/product.html', {'object': object})
+class ProductDetailView(DetailView):
+    model = Product
 
 
 def listing(request, category_id=None, page_number=1):
