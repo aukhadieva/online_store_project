@@ -53,7 +53,7 @@ class BlogPost(models.Model):
     slug = models.CharField(max_length=100, verbose_name='slug', **NULLABLE)
     # slug = models.SlugField(unique=True)
     body = models.TextField(verbose_name='содержимое')
-    img_preview = models.ImageField(upload_to='catalog/posts/', verbose_name='превью (изображение)', **NULLABLE)
+    img_preview = models.ImageField(upload_to='catalog/posts/', verbose_name='превью (изображение)')
     created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='дата создания')
     is_published = models.BooleanField(default=True, verbose_name='признак публикации')
     views_count = models.IntegerField(default=0, verbose_name='количество просмотров')
