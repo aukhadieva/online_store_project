@@ -17,7 +17,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100, verbose_name='наименование')
-    prod_desc = models.TextField(max_length=500, verbose_name='описание продукта')
+    prod_desc = models.TextField(verbose_name='описание продукта')
     image = models.ImageField(upload_to='catalog/products/', verbose_name='изображение', **NULLABLE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     price = models.FloatField(verbose_name='цена')
@@ -26,7 +26,7 @@ class Product(models.Model):
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
 
     def __str__(self):
-        return f'{self.product_name} {self.category} {self.price} {self.prod_desc}'
+        return {self.product_name}
 
     class Meta:
         verbose_name = 'продукт'
@@ -40,8 +40,26 @@ class Contact(models.Model):
     message = models.TextField(max_length=1000, verbose_name='сообщение')
 
     def __str__(self):
-        return f'{self.name} {self.email} {self.message}'
+        return {self.name}
 
     class Meta:
         verbose_name = 'контакт'
         verbose_name_plural = 'контакты'
+
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=50, verbose_name='заголовок')
+    slug = models.CharField(max_length=100, verbose_name='slug', **NULLABLE)
+    body = models.TextField(verbose_name='содержимое')
+    img_preview = models.ImageField(upload_to='catalog/posts/', verbose_name='превью (изображение)', **NULLABLE)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='дата создания')
+    is_published = models.BooleanField(default=True, verbose_name='признак публикации')
+    views_count = models.IntegerField(default=0, verbose_name='количество просмотров')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'пост'
+        verbose_name_plural = 'посты'
+        ordering = ('is_published',)
