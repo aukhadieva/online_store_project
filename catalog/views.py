@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 from pytils.templatetags.pytils_translit import slugify
 
@@ -51,6 +51,13 @@ class BlogPostCreateView(CreateView):
     model = BlogPost
     fields = ('title', 'body', 'img_preview',)
     success_url = reverse_lazy('catalog:posts')
+    #
+    # def form_valid(self, form):
+    #     if form.is_valid():
+    #         new_post = form.save()
+    #         new_post = slugify(new_post.title)
+    #         new_post.save()
+    #     return super().form_valid(form)
 
 
 class BlogPostListView(ListView):
@@ -75,7 +82,10 @@ class BlogPostDetailView(DetailView):
 class BlogPostUpdateView(UpdateView):
     model = BlogPost
     fields = ('title', 'body', 'img_preview',)
-    success_url = reverse_lazy('catalog:posts')
+    # success_url = reverse_lazy('catalog:posts')
+
+    def get_success_url(self):
+        return reverse('catalog:view_post', args=[self.kwargs.get('pk')])
 
 
 class BlogPostDeleteView(DeleteView):
