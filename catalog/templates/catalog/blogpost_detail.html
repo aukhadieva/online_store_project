@@ -9,7 +9,15 @@
     <br>
     <div class="row">
         <div class="col-7">
-            <a href={% url 'catalog:edit_post' object.pk %}>Редактировать пост</a>
+            <div class="btn-group">
+                <a href={% url 'catalog:edit_post' object.pk %} class="btn btn-sm
+                btn-outline-secondary">Редактировать пост</a>
+                <a href={% url 'catalog:delete_post' object.pk %} class="btn btn-sm
+                btn-outline-secondary">Удалить пост</a>
+            </div>
+        </div>
+        <p>
+        <div class="col-7">
             <p>{{ object.body }}</p>
         </div>
         <div class="col-1">
