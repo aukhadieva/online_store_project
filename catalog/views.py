@@ -2,6 +2,8 @@ import json
 
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView
+
 from catalog.models import Contact, Product, Category
 
 
@@ -23,17 +25,17 @@ def index(request):
     return render(request, 'catalog/index.html', context)
 
 
-def contacts(request):
-    context = {'title': 'Обратная связь',
-               'contact': Contact.objects.all()}
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        contacts_dict = {'contacts_data': [{'name': name, 'email': email, 'message': message}]}
-        with open('contacts_data.json', 'w') as j_file:
-            json.dump(contacts_dict, j_file, indent=4, ensure_ascii=False)
-    return render(request, 'catalog/contacts.html', context)
+class ContactTemplateView(TemplateView):
+    template_name = 'catalog/contacts.html'
+
+    def post(self, request):
+        if self.request.method == 'POST':
+            name = self.request.POST.get('name')
+            email = self.request.POST.get('email')
+            message = self.request.POST.get('message')
+            new_contact = Contact.objects.create(name=name, email=email, message=message)
+            new_contact.save()
+        return render(self.request, self.template_name)
 
 
 def product(request, product_id):
