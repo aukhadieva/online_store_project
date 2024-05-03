@@ -50,3 +50,7 @@ class BlogPostCreateView(CreateView):
     model = BlogPost
     fields = ('title', 'body', 'img_preview',)
     success_url = reverse_lazy('catalog:home')
+
+
+class BlogPostListView(ListView):
+    model = BlogPost
