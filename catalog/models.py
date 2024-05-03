@@ -9,7 +9,7 @@ class Category(models.Model):
     cat_desc = models.TextField(max_length=500, verbose_name='описание категории')
 
     def __str__(self):
-        return f'{self.category_name}'
+        return self.category_name
 
     class Meta:
         verbose_name = 'категория'
@@ -27,7 +27,7 @@ class Product(models.Model):
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
 
     def __str__(self):
-        return {self.product_name}
+        return self.product_name
 
     class Meta:
         verbose_name = 'продукт'
@@ -41,7 +41,7 @@ class Contact(models.Model):
     message = models.TextField(max_length=1000, verbose_name='сообщение')
 
     def __str__(self):
-        return {self.name}
+        return self.name
 
     class Meta:
         verbose_name = 'контакт'
