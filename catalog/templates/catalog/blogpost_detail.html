@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.title }}{% endblock%}
+
+{% block content %}
+<article class="blog-post">
+    <h2 class="display-5 link-body-emphasis mb-1">{{ object.title }}</h2>
+    <p class="blog-post-meta">{{ object.created_at.date }}</p>
+    <br>
+    <div class="row">
+        <div class="col-7">
+            <p>{{ object.body }}</p>
+        </div>
+        <div class="col-1">
+        </div>
+        <div class="col-4">
+            <img src="media/{{ object.img_preview }}" class="d-block w-100" alt="...">
+        </div>
+    </div>
+</article>
+<br>
+{% endblock %}

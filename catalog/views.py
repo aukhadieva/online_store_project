@@ -54,3 +54,7 @@ class BlogPostCreateView(CreateView):
 
 class BlogPostListView(ListView):
     model = BlogPost
+
+
+class BlogPostDetailView(DetailView):
+    model = BlogPost
