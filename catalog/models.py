@@ -50,8 +50,8 @@ class Contact(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=50, verbose_name='заголовок')
-    slug = models.CharField(max_length=100, verbose_name='slug', **NULLABLE)
-    # slug = models.SlugField(unique=True)
+    # slug = models.CharField(max_length=100, verbose_name='slug', **NULLABLE)
+    slug = models.SlugField(unique=True)
     body = models.TextField(verbose_name='содержимое')
     img_preview = models.ImageField(upload_to='catalog/posts/', verbose_name='превью (изображение)')
     created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='дата создания')
