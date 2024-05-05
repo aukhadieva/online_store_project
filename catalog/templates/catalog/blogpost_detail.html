@@ -23,7 +23,9 @@
         <div class="col-1">
         </div>
         <div class="col-4">
+            {% if object.img_preview %}
             <img src="{% my_media object.img_preview %}" class="d-block w-100" alt="...">
+            {% endif %}
         </div>
     </div>
 </article>
