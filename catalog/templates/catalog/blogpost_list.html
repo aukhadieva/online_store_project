@@ -11,10 +11,10 @@
         {% for object in object_list %}
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static me-2">
-                <h3 class="mb-0">{{ object.title }}</h3>
+                <h3 class="mb-0">{{ object.title|capfirst }}</h3>
                 <div class="mb-1 text-body-secondary">{{ object.created_at.date }}</div>
                 <p class="card-text mb-auto">{{ object.body|truncatechars:200 }}</p>
-                <a href={% url 'catalog:view_post' object.pk %} class="icon-link gap-1 icon-link-hover stretched-link">
+                <a href={% url 'catalog:view_post' object.slug %} class="icon-link gap-1 icon-link-hover stretched-link">
                 Читать полностью
                 <svg class="bi">
                     <use xlink:href="#chevron-right"/>

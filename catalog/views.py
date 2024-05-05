@@ -1,8 +1,7 @@
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
-from pytils.templatetags.pytils_translit import slugify
 
 from catalog.models import Contact, Product, Category, BlogPost
 
@@ -45,6 +44,17 @@ class ProductDetailView(DetailView):
 class ProductListView(ListView):
     model = Product
     paginate_by = 3
+    template_name = "catalog/product_list.html"
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super(ProductListView, self).get_queryset(*args, **kwargs)
+        category_id = self.kwargs.get('category_id')
+        return queryset.filter(category_id=category_id) if category_id else queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
 
 class BlogPostCreateView(CreateView):
@@ -64,6 +74,8 @@ class BlogPostListView(ListView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -73,7 +85,7 @@ class BlogPostDetailView(DetailView):
             send_mail('Поздравляем!',
                       'Ваш пост набрал 100 просмотров!',
                       'olyaramilya@yandex.ru',
-                      ['olyaramilya@yandex.ru', 'sarole4ka@gmail.com'],
+                      ['sarole4ka@gmail.com', 'saratova.olga.s@mail.ru'],
                       fail_silently=False,)
         return self.object
 
@@ -83,7 +95,8 @@ class BlogPostUpdateView(UpdateView):
     fields = ('title', 'body', 'img_preview',)
 
     def get_success_url(self):
-        return reverse('catalog:view_post', args=[self.kwargs.get('pk')])
+        blog_post = self.get_object()
+        return reverse('catalog:view_post', args=[blog_post.slug])
 
 
 class BlogPostDeleteView(DeleteView):
