@@ -1,4 +1,4 @@
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
@@ -44,6 +44,17 @@ class ProductDetailView(DetailView):
 class ProductListView(ListView):
     model = Product
     paginate_by = 3
+    template_name = "catalog/product_list.html"
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super(ProductListView, self).get_queryset(*args, **kwargs)
+        category_id = self.kwargs.get('category_id')
+        return queryset.filter(category_id=category_id) if category_id else queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
 
 class BlogPostCreateView(CreateView):

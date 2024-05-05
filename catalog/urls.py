@@ -16,4 +16,5 @@ urlpatterns = [
     path('view_post/<slug:slug>', BlogPostDetailView.as_view(), name='view_post'),
     path('edit_post/<int:pk>', BlogPostUpdateView.as_view(), name='edit_post'),
     path('delete_post/<int:pk>', BlogPostDeleteView.as_view(), name='delete_post'),
+    path('store/<int:category_id>', ProductListView.as_view(), name='category'),
 ]
