@@ -4,7 +4,7 @@
 
 {% block content %}
 <article class="blog-post">
-    <h2 class="display-5 link-body-emphasis mb-1">{{ object.title }}</h2>
+    <h2 class="display-5 link-body-emphasis mb-1">{{ object.title|capfirst }}</h2>
     <p class="blog-post-meta">{{ object.created_at.date }} | Просмотров: {{ object.views_count }}</p>
     <br>
     <div class="row">
@@ -18,7 +18,7 @@
         </div>
         <p>
         <div class="col-7">
-            <p>{{ object.body }}</p>
+            <p>{{ object.body|linebreaksbr }}</p>
         </div>
         <div class="col-1">
         </div>
