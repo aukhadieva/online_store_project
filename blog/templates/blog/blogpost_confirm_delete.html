@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% block title %}Удаление{% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
                         {% csrf_token %}
                         <p>Хотите удалить пост "{{ object.title }}"?</p>
                         <button type="submit" class="btn btn-danger">Подтвердить</button>
-                        <a href={% url 'catalog:posts' %} class="btn btn-warning">Отмена</a>
+                        <a href={% url 'blog:posts' %} class="btn btn-warning">Отмена</a>
                     </form>
                 </div>
             </div>

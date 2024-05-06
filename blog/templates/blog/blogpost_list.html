@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block title %}Блог{% endblock %}
 
@@ -14,7 +14,7 @@
                 <h3 class="mb-0">{{ object.title|capfirst }}</h3>
                 <div class="mb-1 text-body-secondary">{{ object.created_at.date }}</div>
                 <p class="card-text mb-auto">{{ object.body|truncatechars:200 }}</p>
-                <a href={% url 'catalog:view_post' object.slug %} class="icon-link gap-1 icon-link-hover stretched-link">
+                <a href="{% url 'blog:view_post' object.slug %}" class="icon-link gap-1 icon-link-hover stretched-link">
                 Читать полностью
                 <svg class="bi">
                     <use xlink:href="#chevron-right"/>
@@ -22,7 +22,9 @@
                 </a>
             </div>
             <div class="col-4">
+                {% if object.img_preview %}
                 <img src="{% my_media object.img_preview %}" height="250" class="card-img-top">
+                {% endif %}
             </div>
         </div>
         {% endfor %}

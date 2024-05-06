@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
@@ -27,7 +27,7 @@
     <div class="col-lg-6 px-0">
         <h1 class="display-4 fst-italic">Стань соавтором нашего блога!</h1>
         <p class="lead my-3">Заполни необходимые поля и твой пост будет опубликован на нашем сайте!</p>
-        <p class="lead mb-0"><a href={% url 'catalog:create_post' %} class="text-body-emphasis fw-bold">Предложить пост...</a></p>
+        <p class="lead mb-0"><a href={% url 'blog:create_post' %} class="text-body-emphasis fw-bold">Предложить пост...</a></p>
     </div>
 </div>
 
