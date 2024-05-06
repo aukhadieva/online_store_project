@@ -8,7 +8,7 @@ from blog.models import BlogPost
 class BlogPostCreateView(CreateView):
     model = BlogPost
     fields = ('title', 'body', 'img_preview',)
-    success_url = reverse_lazy('catalog:posts')
+    success_url = reverse_lazy('blog:posts')
 
 
 class BlogPostListView(ListView):
@@ -44,9 +44,9 @@ class BlogPostUpdateView(UpdateView):
 
     def get_success_url(self):
         blog_post = self.get_object()
-        return reverse('catalog:view_post', args=[blog_post.slug])
+        return reverse('blog:view_post', args=[blog_post.slug])
 
 
 class BlogPostDeleteView(DeleteView):
     model = BlogPost
-    success_url = reverse_lazy('catalog:posts')
+    success_url = reverse_lazy('blog:posts')
