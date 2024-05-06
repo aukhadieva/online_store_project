@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from catalog.models import Product, Category, Contact, BlogPost
+from catalog.models import Product, Category, Contact
 
 
 @admin.register(Product)
@@ -19,11 +19,3 @@ class CategoryAdmin(admin.ModelAdmin):
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email', 'message',)
     search_fields = ('message',)
-
-
-@admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'is_published', 'views_count',)
-    search_fields = ('title', 'body',)
-    list_filter = ('is_published',)
-    prepopulated_fields = {'slug': ('title',)}
