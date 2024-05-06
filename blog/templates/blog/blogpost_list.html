@@ -22,7 +22,9 @@
                 </a>
             </div>
             <div class="col-4">
+                {% if object.img_preview %}
                 <img src="{% my_media object.img_preview %}" height="250" class="card-img-top">
+                {% endif %}
             </div>
         </div>
         {% endfor %}
