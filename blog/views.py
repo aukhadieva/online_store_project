@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
 from blog.models import BlogPost
+from config import settings
 
 
 class BlogPostCreateView(CreateView):
@@ -32,7 +33,7 @@ class BlogPostDetailView(DetailView):
         if self.object.views_count == 100:
             send_mail('Поздравляем!',
                       'Ваш пост набрал 100 просмотров!',
-                      'olyaramilya@yandex.ru',
+                      settings.EMAIL_HOST_USER,
                       ['sarole4ka@gmail.com', 'saratova.olga.s@mail.ru'],
                       fail_silently=False, )
         return self.object
