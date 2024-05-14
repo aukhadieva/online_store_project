@@ -2,6 +2,7 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
+from blog.forms import BlogPostForm
 from blog.models import BlogPost
 from config import settings
 from utils import TitleMixin
@@ -9,7 +10,7 @@ from utils import TitleMixin
 
 class BlogPostCreateView(TitleMixin, CreateView):
     model = BlogPost
-    fields = ('title', 'body', 'img_preview',)
+    form_class = BlogPostForm
     success_url = reverse_lazy('blog:posts')
     title = 'Форма'
 
@@ -47,7 +48,7 @@ class BlogPostDetailView(TitleMixin, DetailView):
 
 class BlogPostUpdateView(TitleMixin, UpdateView):
     model = BlogPost
-    fields = ('title', 'body', 'img_preview',)
+    form_class = BlogPostForm
     title = 'Редактирование поста'
 
     def get_success_url(self):
