@@ -26,6 +26,10 @@ class ProductUpdateView(TitleMixin, UpdateView):
     success_url = reverse_lazy('catalog:store')
     title = 'Редактирование продукта'
 
+    def get_success_url(self):
+        product = self.get_object()
+        return reverse_lazy('catalog:view_product', args=[product.pk])
+
 
 class ProductDeleteView(TitleMixin, DeleteView):
     model = Product
