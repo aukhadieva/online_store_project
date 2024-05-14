@@ -1,29 +1,41 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 
+from catalog.forms import ProductModelForm
 from catalog.models import Contact, Product, Category
+from utils import TitleMixin
 
 
 def index(request):
     context = {'title': 'Главная',
-               'object_list': Product.objects.all()[:3],
-               'category_list': Category.objects.all()}
-    if request.method == 'POST':
-        product_name = request.POST.get('product_name')
-        price = request.POST.get('price')
-        category = request.POST.get('category')
-        category_id = Category.objects.get(category_name=category).id
-        prod_desc = request.POST.get('prod_desc')
-        new_book = Product.objects.create(product_name=product_name,
-                                          price=price,
-                                          category=Category.objects.get(pk=category_id),
-                                          prod_desc=prod_desc)
-        new_book.save()
+               'object_list': Product.objects.all()[:3]}
     return render(request, 'catalog/index.html', context)
 
 
-class ContactTemplateView(TemplateView):
+class ProductCreateView(TitleMixin, CreateView):
+    model = Product
+    form_class = ProductModelForm
+    success_url = reverse_lazy('catalog:store')
+    title = 'Создание продукта'
+
+
+class ProductUpdateView(TitleMixin, UpdateView):
+    model = Product
+    form_class = ProductModelForm
+    success_url = reverse_lazy('catalog:store')
+    title = 'Редактирование продукта'
+
+
+class ProductDeleteView(TitleMixin, DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:store')
+    title = 'Удаление продукта'
+
+
+class ContactTemplateView(TitleMixin, TemplateView):
     template_name = 'catalog/contacts.html'
+    title = 'Обратная связь'
 
     def post(self, request):
         if self.request.method == 'POST':
@@ -35,14 +47,18 @@ class ContactTemplateView(TemplateView):
         return render(self.request, self.template_name)
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(TitleMixin, DetailView):
     model = Product
 
+    def get_title(self):
+        return self.object.product_name
 
-class ProductListView(ListView):
+
+class ProductListView(TitleMixin, ListView):
     model = Product
     paginate_by = 3
     template_name = "catalog/product_list.html"
+    title = 'Каталог'
 
     def get_queryset(self, *args, **kwargs):
         queryset = super(ProductListView, self).get_queryset(*args, **kwargs)
