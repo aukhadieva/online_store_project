@@ -1,0 +1,54 @@
+{% extends 'catalog/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="mx-auto mb-3 " style="max-width: 1000px;">
+    <div class="container mb-5">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if object %}
+                            <h4 class="card-title">Карточка товара</h4>
+                            <br>
+                            <p>Отредактируй необходимые поля для того, чтобы обновить информацию.</p>
+                            <br>
+                            {% else %}
+                            <h4 class="card-title">Карточка участника</h4>
+                            <br>
+                            {% endif %}
+                            {{ form.as_p }}
+                            <div class="button">
+                                <button type="submit" class="btn btn-secondary ">
+                                    {% if object %}
+                                    Сохранить
+                                    {% else %}
+                                    Отправить
+                                    {% endif %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Версия товара</h4>
+                            <br>
+                            {{ formset.management_form }}
+                            {% for form in formset.forms %}
+                            {{ form.as_p }}
+                            {% if not forloop.last %}
+                            <hr>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

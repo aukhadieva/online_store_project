@@ -2,7 +2,6 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-
 <div class="mx-auto" style="width: 400px;">
     <div class="col-12">
         <div class="row">
@@ -10,9 +9,9 @@
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
-                        <p>Хотите удалить пост "{{ object.title }}"?</p>
+                        <p>Хотите удалить карточку товара "{{ object.product_name }}"?</p>
                         <button type="submit" class="btn btn-danger">Подтвердить</button>
-                        <a href={% url 'blog:posts' %} class="btn btn-warning">Отмена</a>
+                        <a href="{% url 'catalog:store' %}" class="btn btn-warning">Отмена</a>
                     </form>
                 </div>
             </div>

@@ -1,17 +1,23 @@
 {% extends 'catalog/base.html' %}
-
-{% block title %}Форма{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div class="container mb-5">
-    <div class="row">
-        <div class="col-6">
+<div class="mx-auto mb-3 " style="max-width: 600px;">
+    <div class="container mb-5">
+        <div class="row">
             <div class="card">
                 <div class="card-body">
+                    {% if object %}
+                    <h4 class="card-title">Карточка блога</h4>
+                    <br>
+                    <p>Отредактируй необходимые поля для того, чтобы обновить информацию.</p>
+                    <br>
+                    {% else %}
                     <h4 class="card-title">Стань нашим автором</h4>
                     <br>
                     <p>Заполни необходимые поля и твой пост будет опубликован на нашем сайте!</p>
                     <br>
+                    {% endif %}
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.as_p }}
