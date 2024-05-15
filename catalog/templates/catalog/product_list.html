@@ -9,10 +9,15 @@
     <div class="col-lg-2">
         {% for category in categories %}
         <div class="list-group">
-            <a href={% url "catalog:category" category.pk %}
-            class="list-group list-group-item-action">{{ category.category_name }}</a>
+            <a href="{% url 'catalog:category' category.pk %}"
+               class="list-group list-group-item-action">{{ category.category_name }}</a>
         </div>
         {% endfor %}
+        <hr>
+
+        <div class="list-group">
+            <a href="{% url 'catalog:store' %}" class="list-group list-group-item-action">Сбросить фильтр</a>
+        </div>
     </div>
 
     <div class="col-lg-10">
@@ -29,6 +34,26 @@
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ object.product_name }}</h5>
+                                </h6>
+                                {% if object.version.all %}
+                                {% for version in object.version.all %}
+                                {% if version.is_current == True %}
+                                <hr>
+                                <h6>
+                                    Активная версия:<br>
+                                    Название версии: {{version.version_name}}<br>
+                                    Номер версии: {{version.version_number}}
+                                </h6>
+                                {% else %}
+                                <hr>
+                                <h6>Версия "{{version.version_name}}" не активна</h6>
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                <hr>
+                                <h6>Нет активной версии</h6>
+                                {% endif %}
+                                <br>
                                 <a href={% url 'catalog:view_product' object.pk %} class="btn
                                 btn-outline-success">Купить</a>
                             </div>
