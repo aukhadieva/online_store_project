@@ -14,5 +14,5 @@ urlpatterns = [
     path('view_product/<int:pk>', ProductDetailView.as_view(), name='view_product'),
     path('delete_product/<int:pk>/', ProductDeleteView.as_view(), name='delete_product'),
     path('store/', ProductListView.as_view(), name='store'),
-    path('store/<int:category_id>', ProductListView.as_view(), name='category'),
+    path('store/category/<int:category_id>', ProductListView.as_view(), name='category'),
 ]
