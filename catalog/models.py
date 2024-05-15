@@ -34,6 +34,21 @@ class Product(models.Model):
         ordering = ('in_stock',)
 
 
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="version", verbose_name='продукт')
+    version_name = models.CharField(max_length=150, verbose_name='название версии')
+    version_number = models.IntegerField(verbose_name='номер версии')
+    is_current = models.BooleanField(default=True, verbose_name='признак текущей версии')
+
+    def __str__(self):
+        return f'{self.version_name} / {self.version_number}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+        ordering = ('is_current',)
+
+
 class Contact(models.Model):
     name = models.CharField(max_length=50, verbose_name='имя')
     email = models.EmailField(max_length=254, verbose_name='электронная почта')
