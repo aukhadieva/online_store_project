@@ -43,12 +43,13 @@
                                     {% if object.version.all %}
                                     {% for version in object.version.all %}
                                     {% if version.is_current == True %}
-                                    <hr>
+
                                     Активная версия:<br>
                                     Название версии: {{version.version_name}}<br>
                                     Номер версии: {{version.version_number}}
                                     {% else %}
                                     Версия "{{version.version_name}}" не активна
+                                    <hr>
                                     {% endif %}
                                     {% endfor %}
                                     {% else %}
