@@ -4,48 +4,33 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div class="p-4 p-md-5 mb-5 rounded text-body-emphasis bg-body-secondary">
-    <div class="col-lg-6 px-0">
-        <h1 class="display-4 fst-italic">Стань соавтором нашего блога!</h1>
-        <p class="lead my-3">Заполни необходимые поля и твой пост будет опубликован на нашем сайте!</p>
-        <p class="lead mb-0"><a href="{% url 'blog:create_post' %}" class="text-body-emphasis fw-bold">Предложить
-            пост...</a></p>
+<div class="row align-items-md-stretch mb-5">
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <h2>Как продать свои книги?</h2>
+            <h6><b>Выбери ненужные книги дома</b></h6>
+            <p>Приготовь прочитанные книги в хорошем состоянии.
+                К распродаже принимаются современные книги любых жанров для детей и взрослых.</p>
+            <h6><b>Заполни карточку участника</b></h6>
+            <p>В карточке необходимо указать наименование, автора, стоимость, выбрать категорию из
+                выпадающего списка, а также описать сюжет вашей книги.</p>
+            <a href="{% url 'catalog:create_product' %}" class="btn btn-outline-secondary">Заполнить карточку
+                участника</a>
+        </div>
     </div>
-</div>
-
-<div class="container mb-5">
-    <div class="row">
-        <div class="col-12">
-            <div class="card mx-auto mb-3 " style="max-width: 1040px;">
-                <div class="row g-0">
-                    <br>
-                    <div class="col-md-4">
-                        <img src="{% static 'images/Garage_Sale.JPG' %}" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h4 class="card-title">Как продать свои книги?</h4>
-                            <br>
-                            <h6><b>Выбери ненужные книги дома</b></h6>
-                            <p>Приготовь прочитанные книги в хорошем состоянии.
-                                К распродаже принимаются современные книги любых жанров для детей и взрослых.</p>
-                            <h6><b>Заполни карточку участника</b></h6>
-                            <p>В карточке необходимо указать наименование, автора, стоимость, выбрать категорию из
-                                выпадающего списка, а также описать сюжет вашей книги.</p>
-                            <a href="{% url 'catalog:create_product' %}" class="btn btn-outline-success">Заполнить
-                                карточку
-                                участника</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <h2>Стань соавтором нашего блога!</h2>
+            <p>Заполни необходимые поля и твой пост будет опубликован на нашем сайте!</p>
+            <a href="{% url 'catalog:create_product' %}" class="btn btn-outline-secondary">Предложить пост...</a>
         </div>
     </div>
 </div>
 
-<h3 class="display-5" align="center" style="color:Black">Выбор покупателей</h3>
-<br>
+<hr>
 <div class="container">
+    <h3 class="display-5" style="color:Black">Выбор покупателей</h3>
+    <br>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for object in object_list %}
         <div class="col">
