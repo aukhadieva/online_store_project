@@ -1,9 +1,14 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from catalog.models import Product, Version
 
 
 class StyleMixin:
+    """
+    Миксин для стилизации форм.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -11,6 +16,9 @@ class StyleMixin:
 
 
 class ProductForm(StyleMixin, forms.ModelForm):
+    """
+    Форма для создания и редактирования продуктов.
+    """
     BANNED_LIST = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
     class Meta:
@@ -18,6 +26,9 @@ class ProductForm(StyleMixin, forms.ModelForm):
         fields = ('product_name', 'price', 'category', 'prod_desc', 'image',)
 
     def clean_product_name(self):
+        """
+        Проверяет название продукта на наличие недопустимых слов.
+        """
         cleaned_data = self.cleaned_data['product_name']
         for word in cleaned_data.split():
             if word in self.BANNED_LIST:
@@ -26,6 +37,9 @@ class ProductForm(StyleMixin, forms.ModelForm):
         return cleaned_data
 
     def clean_prod_desc(self):
+        """
+        Проверяет описание продукта на наличие недопустимых слов.
+        """
         cleaned_data = self.cleaned_data['prod_desc']
         for word in cleaned_data.split():
             if word in self.BANNED_LIST:
@@ -35,20 +49,41 @@ class ProductForm(StyleMixin, forms.ModelForm):
 
 
 class VersionForm(forms.ModelForm):
-    version_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label='Название версии')
-    version_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}), label='Номер версии')
-    is_current = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}), label='Признак текущей версии', required=False)
+    """
+    Форма для создания и редактирования версий продуктов.
+    """
+    version_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True,
+                                   label='Название версии')
+    version_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}), required=True,
+                                        label='Номер версии')
+    is_current = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                                    label='Признак текущей версии', required=False)
 
     class Meta:
         model = Version
         fields = ('version_name', 'version_number', 'product', 'is_current')
 
     def clean_is_current(self):
-        cleaned_data = self.cleaned_data['is_current']
-        versions = Version.objects.filter(is_current=True)
-        for version in versions:
-            if version.is_current:
-                version.is_current = False
-                version.save()
+        """
+        Проверяет наличие текущей версии продукта.
+        Если такая есть, то поднимается ValidationError
+        (сообщение будет отображено пользователю при отправке формы).
+        """
+        is_current = self.cleaned_data.get('is_current')
+        if is_current:
+            if Version.objects.filter(is_current=True).exists():
+                raise ValidationError("Существует другая текущая версия. Она будет деактивирована.")
+        return is_current
 
-        return cleaned_data
+    def save(self, commit=True):
+        """
+        Обновляет флаги текущей версии продукта.
+        Если новая версия устанавливается как текущая,
+        все предыдущие версии для данного продукта деактивируются.
+        """
+        instance = super().save(commit=False)
+        if instance.is_current:
+            Version.objects.filter(product=instance.product, is_current=True).update(is_current=False)
+        if commit:
+            instance.save()
+        return instance
