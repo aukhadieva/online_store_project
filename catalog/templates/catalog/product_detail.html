@@ -39,7 +39,6 @@
             <br>
             <br>
         </h6>
-
         {% if object.version.all %}
         {% for version in object.version.all %}
         {% if version.is_current == True %}
@@ -55,9 +54,9 @@
         {% endif %}
         {% endfor %}
         {% else %}
+        <hr>
         <h6>Нет активной версии</h6>
         {% endif %}
-
     </div>
 </div>
 {% endblock %}
