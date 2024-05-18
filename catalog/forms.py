@@ -12,7 +12,10 @@ class StyleMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            if isinstance(field, forms.BooleanField):
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
+                field.widget.attrs['class'] = 'form-control'
 
 
 class ProductForm(StyleMixin, forms.ModelForm):
@@ -48,16 +51,10 @@ class ProductForm(StyleMixin, forms.ModelForm):
         return cleaned_data
 
 
-class VersionForm(forms.ModelForm):
+class VersionForm(StyleMixin, forms.ModelForm):
     """
     Форма для создания и редактирования версий продуктов.
     """
-    version_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True,
-                                   label='Название версии')
-    version_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}), required=True,
-                                        label='Номер версии')
-    is_current = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-                                    label='Признак текущей версии', required=False)
 
     class Meta:
         model = Version
