@@ -51,7 +51,7 @@ class ProductUpdateView(TitleMixin, UpdateView):
 
     def form_valid(self, form):
         """
-        Проверяет валидность формы и сохраняет ее.
+        Проверяет валидность формы и формсета.
         """
         context = self.get_context_data()
         formset = context['formset']
@@ -96,23 +96,10 @@ class ProductListView(TitleMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         """
-        Добавляет в контекст список категорий и переопределяет список продуктов.
+        Добавляет в контекст список категорий.
         """
-        # получаем текущий контекст
         context_data = super().get_context_data(*args, **kwargs)
-        # добавляем категории в контекст
         context_data['categories'] = Category.objects.all()
-
-        # Получаем текущий список продуктов из `context_data`
-        products = context_data.get('object_list')
-        # для каждого продукта ищем текущую версию (`is_current=True`)
-        # и сохраняем ее в новое поле `current_version` у объекта продукта.
-        # Это поле добавляется динамически и не сохраняется в базе данных.
-        for product in products:
-            current_version = product.version.filter(is_current=True).first()
-            if current_version:
-                product.current_version = current_version
-        # возвращаем обновленный контекст
         return context_data
 
 
