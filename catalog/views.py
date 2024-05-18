@@ -43,7 +43,7 @@ class ProductUpdateView(TitleMixin, UpdateView):
         """
         context = super().get_context_data(**kwargs)
         VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
-        if self.request.method == 'POST' and Version:
+        if self.request.method == 'POST':
             context['formset'] = VersionFormset(self.request.POST, instance=self.object)
         else:
             context['formset'] = VersionFormset(instance=self.object)
@@ -51,14 +51,17 @@ class ProductUpdateView(TitleMixin, UpdateView):
 
     def form_valid(self, form):
         """
-        Проверяет валидность формы и сохраняет ее.
+        Проверяет валидность формы и формсета.
         """
-        formset = self.get_context_data()['formset']
-        self.object = form.save()
-        if formset.is_valid():
+        context = self.get_context_data()
+        formset = context['formset']
+        if form.is_valid() and formset.is_valid():
+            self.object = form.save()
             formset.instance = self.object
             formset.save()
-        return super().form_valid(form)
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
 class ProductDeleteView(TitleMixin, DeleteView):
@@ -93,23 +96,10 @@ class ProductListView(TitleMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         """
-        Добавляет в контекст список категорий и переопределяет список продуктов.
+        Добавляет в контекст список категорий.
         """
-        # получаем текущий контекст
         context_data = super().get_context_data(*args, **kwargs)
-        # добавляем категории в контекст
         context_data['categories'] = Category.objects.all()
-
-        # Получаем текущий список продуктов из `context_data`
-        products = context_data.get('object_list')
-        # для каждого продукта ищем текущую версию (`is_current=True`)
-        # и сохраняем ее в новое поле `current_version` у объекта продукта.
-        # Это поле добавляется динамически и не сохраняется в базе данных.
-        for product in products:
-            current_version = product.version.filter(is_current=True).first()
-            if current_version:
-                product.current_version = current_version
-        # возвращаем обновленный контекст
         return context_data
 
 
