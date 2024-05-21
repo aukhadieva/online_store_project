@@ -1,6 +1,10 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import send_mail
 from django.db import models
+from django.urls import reverse
 
+from config import settings
+from config.settings import DOMAIN_NAME
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -28,3 +32,19 @@ class EmailVerification(models.Model):
 
     class Meta:
         verbose_name = 'проверка электронной почты'
+
+    def send_verification_email(self):
+        """
+        Отправляет электронное письмо с ключом подтверждения эл. почты.
+        """
+        link = reverse('users:verify', kwargs={'email': self.user.email, 'key': self.key})
+        verification_link = f'{DOMAIN_NAME}{link}'
+        subject = f'Подтверждение учетной записи'
+        message = f'Для подтверждения регистрации пройдите по ссылке:\n {verification_link}'
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[self.user.email],
+            fail_silently=False,
+        )
