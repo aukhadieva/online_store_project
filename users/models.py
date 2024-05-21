@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
 from django.db import models
 from django.urls import reverse
+from django.utils.timezone import now
 
 from config import settings
 from config.settings import DOMAIN_NAME
@@ -48,3 +49,9 @@ class EmailVerification(models.Model):
             recipient_list=[self.user.email],
             fail_silently=False,
         )
+
+    def is_expired(self):
+        """
+        Проверяет, истек ли срок действия ключа.
+        """
+        return True if now() >= self.expiration else False
