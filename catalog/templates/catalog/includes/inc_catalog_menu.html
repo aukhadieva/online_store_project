@@ -3,26 +3,29 @@
 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
     <a href="{% url 'catalog:home' %}" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis
     text-decoration-none">
-    <img src="{% static 'images/book.png' %}" alt="logo" width="60" height="54">
-    <svg class="bi me-2" width="40" height="32" role="img" aria-label=""></svg>
-    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{% url 'catalog:home' %}" class="nav-link px-2 link-body-emphasis">Главная</a></li>
-        <li><a href="{% url 'catalog:store' %}" class="nav-link px-2 link-body-emphasis">Каталог</a></li>
-        <li><a href="{% url 'catalog:contacts' %}" class="nav-link px-2 link-body-emphasis">Обратная связь</a></li>
-        <li><a href="{% url 'blog:posts' %}" class="nav-link px-2 link-body-emphasis">Наши тексты</a></li>
-    </ul>
-    {% if user.is_authenticated %}
-    <form action="{% url 'users:logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn btn-success">Выйти</button>
-    </form>
-    {% else %}
-        <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-    <a class="btn btn btn-outline-success" href="{% url 'users:login' %}">Войти</a>
-    <a class="btn btn btn-success" href="{% url 'users:register' %}">Регистрация</a>
+        <img src="{% static 'images/book.png' %}" alt="logo" width="60" height="54">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label=""></svg>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{% url 'catalog:home' %}" class="nav-link px-2 link-body-emphasis">Главная</a></li>
+            <li><a href="{% url 'catalog:store' %}" class="nav-link px-2 link-body-emphasis">Каталог</a></li>
+            <li><a href="{% url 'catalog:contacts' %}" class="nav-link px-2 link-body-emphasis">Обратная связь</a></li>
+            <li><a href="{% url 'blog:posts' %}" class="nav-link px-2 link-body-emphasis">Наши тексты</a></li>
+        </ul>
+        {% if user.is_authenticated %}
+        <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-2">
+        <a class="btn btn btn-success" href="{% url 'users:profile' %}">Профиль</a>
             </div>
-    {% endif %}
-    <!--    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">-->
-    <!--        <input type="search" class="form-control" placeholder="Найти книгу..." aria-label="Search">-->
-    <!--    </form>-->
+        <form action="{% url 'users:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-success">Выйти</button>
+        </form>
+        {% else %}
+        <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+            <a class="btn btn btn-outline-success" href="{% url 'users:login' %}">Войти</a>
+            <a class="btn btn btn-success" href="{% url 'users:register' %}">Регистрация</a>
+        </div>
+        {% endif %}
+        <!--    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">-->
+        <!--        <input type="search" class="form-control" placeholder="Найти книгу..." aria-label="Search">-->
+        <!--    </form>-->
 </div>
