@@ -12,3 +12,13 @@ class UserLoginForm(StyleMixin, AuthenticationForm):
     class Meta:
         model = User
         fields = ('email', 'password',)
+
+
+class UserRegisterForm(StyleMixin, UserCreationForm):
+    """
+    Форма для регистрации пользователя.
+    """
+
+    class Meta:
+        model = User
+        fields = ('email', 'password1', 'password2',)
