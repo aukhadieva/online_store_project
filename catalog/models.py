@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -16,6 +18,8 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    owner = models.ForeignKey(to=User, on_delete=models.SET_NULL, verbose_name='владелец',
+                              help_text='Укажите владельца продукта', **NULLABLE)
     product_name = models.CharField(max_length=100, verbose_name='наименование')
     prod_desc = models.TextField(verbose_name='описание продукта')
     image = models.ImageField(upload_to='catalog/products/', verbose_name='изображение', **NULLABLE)

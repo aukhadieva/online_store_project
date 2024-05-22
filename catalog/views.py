@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -17,18 +18,29 @@ def index(request):
     return render(request, 'catalog/index.html', context)
 
 
-class ProductCreateView(TitleMixin, CreateView):
+class ProductCreateView(TitleMixin, LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:store')
     title = 'Создание продукта'
+    login_url = reverse_lazy('users:login')
+    
+    def form_valid(self, form):
+        """
+        Привязывает продукт к текущему пользователю.
+        """
+        product = form.save()
+        product.owner = self.request.user
+        product.save()
+        return super().form_valid(form)
 
 
-class ProductUpdateView(TitleMixin, UpdateView):
+class ProductUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:store')
     title = 'Редактирование продукта'
+    login_url = reverse_lazy('users:login')
 
     def get_success_url(self):
         """
@@ -64,10 +76,11 @@ class ProductUpdateView(TitleMixin, UpdateView):
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
-class ProductDeleteView(TitleMixin, DeleteView):
+class ProductDeleteView(TitleMixin, LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:store')
     title = 'Удаление продукта'
+    login_url = reverse_lazy('users:login')
 
 
 class ProductDetailView(TitleMixin, DetailView):
