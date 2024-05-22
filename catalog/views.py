@@ -24,6 +24,15 @@ class ProductCreateView(TitleMixin, LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('catalog:store')
     title = 'Создание продукта'
     login_url = reverse_lazy('users:login')
+    
+    def form_valid(self, form):
+        """
+        Привязывает продукт к текущему пользователю.
+        """
+        product = form.save()
+        product.owner = self.request.user
+        product.save()
+        return super().form_valid(form)
 
 
 class ProductUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
