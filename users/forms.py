@@ -4,6 +4,8 @@ from datetime import timedelta
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.utils.timezone import now
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 from users.models import User, EmailVerification
 from utils import StyleMixin
@@ -40,6 +42,7 @@ class UserProfileForm(StyleMixin, UserChangeForm):
     """
     Форма для редактирования профиля пользователя.
     """
+    phone = PhoneNumberField(region="RU", widget=PhoneNumberPrefixWidget(country_choices=[("RU", "+7"),],),)
 
     class Meta:
         model = User
