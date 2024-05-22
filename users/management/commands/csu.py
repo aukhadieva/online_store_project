@@ -13,7 +13,8 @@ class Command(BaseCommand):
             first_name='admin',
             last_name='admin',
             is_superuser=True,
-            is_staff=True
+            is_staff=True,
+            is_active=True,
         )
         user.set_password(os.getenv('SU_PASSWORD'))
         user.save()
