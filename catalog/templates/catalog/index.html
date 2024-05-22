@@ -4,6 +4,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <div class="row align-items-md-stretch mb-5">
     <div class="col-md-6">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
@@ -26,8 +27,9 @@
         </div>
     </div>
 </div>
-
 <hr>
+{% endif %}
+
 <div class="container">
     <h3 class="display-5" style="color:Black">Выбор покупателей</h3>
     <br>
