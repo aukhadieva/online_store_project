@@ -50,6 +50,7 @@ class EmailVerificationView(TitleMixin, TemplateView):
         email_verifications = EmailVerification.objects.filter(user=user, key=key)
         if email_verifications.exists() and not email_verifications.first().is_expired():
             user.is_verified_email = True
+            user.is_active = True
             user.save()
             return super().get(request, *args, **kwargs)
         else:
