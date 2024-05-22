@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
+from phonenumber_field.modelfields import PhoneNumberField
 
 from config import settings
 from config.settings import DOMAIN_NAME
@@ -14,7 +15,7 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, verbose_name='электронная почта')
     avatar = models.ImageField(upload_to='users/', verbose_name='аватар', **NULLABLE)
-    phone = models.CharField(max_length=35, verbose_name='номер телефона', **NULLABLE)
+    phone = PhoneNumberField(verbose_name='номер телефона', **NULLABLE)
     country = models.CharField(max_length=70, verbose_name='страна', **NULLABLE)
     is_verified_email = models.BooleanField(default=False, verbose_name='статус подтверждения эл. почты')
 
