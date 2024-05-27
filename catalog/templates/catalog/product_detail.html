@@ -14,7 +14,7 @@
         <h3>{{ object.product_name }}</h3>
         <div class="col">
             <div class="btn-group">
-                {% if perms.catalog.is_published and perms.catalog.change_prod_desc and perm.catalog.change_category or user == object.owner or user.is_superuser %}
+                {% if perms.catalog.set_published_status and perms.catalog.change_prod_desc and perms.catalog.change_category or user == object.owner or user.is_superuser %}
                 <a href="{% url 'catalog:edit_product' object.pk %}" class="btn btn-sm
                 btn-outline-secondary">Редактировать карточку товара</a>
                 {% endif %}
