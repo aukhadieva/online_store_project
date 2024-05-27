@@ -28,6 +28,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='дата создания')
     updated_at = models.DateTimeField(auto_now=True, editable=False, verbose_name='дата изменения')
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
+    is_published = models.BooleanField(default=False, verbose_name='признак публикации')
 
     def __str__(self):
         return self.product_name
@@ -36,6 +37,11 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ('in_stock',)
+        permissions = [
+            ('set_published_status', 'Can publish product'),
+            ('change_prod_desc', 'Can change product description'),
+            ('change_category', 'Can change product category'),
+        ]
 
 
 class Version(models.Model):
