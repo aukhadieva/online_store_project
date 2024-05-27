@@ -110,22 +110,21 @@ class ProductListView(TitleMixin, ListView):
         """
         Возвращает список продуктов, отфильтрованных по категории (при применении фильтра).
         """
-        queryset = super().get_queryset(*args, **kwargs)
+        queryset = super().get_queryset()
         category_id = self.kwargs.get('category_id')
         return queryset.filter(category_id=category_id) if category_id else queryset
 
     def get_context_data(self, *args, **kwargs):
         """
-        Добавляет в контекст список категорий.
+        Возвращает данные контекста для отображения списка объектов.
         """
         context_data = super().get_context_data(*args, **kwargs)
-        context_data['categories'] = Category.objects.all()
-
         user = self.request.user
-        published_products = Product.objects.filter(is_published=True).distinct()
         if not (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
                 user.has_perm('catalog.change_category')):
-            context_data['object_list'] = published_products
+            published_products = Product.objects.filter(is_published=True)
+            context_data = super().get_context_data(object_list=published_products, **kwargs)
+        context_data['categories'] = Category.objects.all()
         return context_data
 
 
