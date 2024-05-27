@@ -9,12 +9,14 @@
     <br>
     <div class="row">
         <div class="col-7">
+            {% if perms.blog.change_blogpost and perms.blog.delete_blogpost %}
             <div class="btn-group">
-                <a href={% url 'blog:edit_post' object.pk %} class="btn btn-sm
+                <a href="{% url 'blog:edit_post' object.pk %}" class="btn btn-sm
                 btn-outline-secondary">Редактировать пост</a>
-                <a href={% url 'blog:delete_post' object.pk %} class="btn btn-sm
+                <a href="{% url 'blog:delete_post' object.pk %}" class="btn btn-sm
                 btn-outline-secondary">Удалить пост</a>
             </div>
+            {% endif %}
         </div>
         <p>
         <div class="col-7">
