@@ -120,6 +120,12 @@ class ProductListView(TitleMixin, ListView):
         """
         context_data = super().get_context_data(*args, **kwargs)
         context_data['categories'] = Category.objects.all()
+
+        user = self.request.user
+        published_products = Product.objects.filter(is_published=True).distinct()
+        if not (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
+                user.has_perm('catalog.change_category')):
+            context_data['object_list'] = published_products
         return context_data
 
 
