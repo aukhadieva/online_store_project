@@ -2,6 +2,7 @@ import secrets
 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
@@ -31,7 +32,7 @@ class UserRegisterView(TitleMixin, CreateView):
     title = 'Регистрация'
 
 
-class UserProfileView(TitleMixin, UpdateView):
+class UserProfileView(TitleMixin, LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
