@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
@@ -8,11 +9,12 @@ from config import settings
 from utils import TitleMixin
 
 
-class BlogPostCreateView(TitleMixin, CreateView):
+class BlogPostCreateView(TitleMixin, PermissionRequiredMixin, CreateView):
     model = BlogPost
     form_class = BlogPostForm
     success_url = reverse_lazy('blog:posts')
     title = 'Форма'
+    permission_required = 'blog.add_blogpost'
 
 
 class BlogPostListView(TitleMixin, ListView):
@@ -46,17 +48,19 @@ class BlogPostDetailView(TitleMixin, DetailView):
         return self.object
 
 
-class BlogPostUpdateView(TitleMixin, UpdateView):
+class BlogPostUpdateView(TitleMixin, PermissionRequiredMixin, UpdateView):
     model = BlogPost
     form_class = BlogPostForm
     title = 'Редактирование поста'
+    permission_required = 'blog.change_blogpost'
 
     def get_success_url(self):
         blog_post = self.get_object()
         return reverse('blog:view_post', args=[blog_post.slug])
 
 
-class BlogPostDeleteView(TitleMixin, DeleteView):
+class BlogPostDeleteView(TitleMixin, PermissionRequiredMixin, DeleteView):
     model = BlogPost
     success_url = reverse_lazy('blog:posts')
     title = 'Удаление поста'
+    permission_required = 'blog.delete_blogpost'

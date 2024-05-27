@@ -11,10 +11,18 @@
             <li><a href="{% url 'catalog:contacts' %}" class="nav-link px-2 link-body-emphasis">Обратная связь</a></li>
             <li><a href="{% url 'blog:posts' %}" class="nav-link px-2 link-body-emphasis">Наши тексты</a></li>
         </ul>
+
         {% if user.is_authenticated %}
+
+        {% if perms.blog.add_blogpost %}
         <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-2">
-        <a class="btn btn btn-success" href="{% url 'users:profile' %}">Профиль</a>
-            </div>
+            <a href="{% url 'blog:create_post' %}" class="btn btn-outline-secondary">Создать пост</a>
+        </div>
+        {% endif %}
+
+        <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-2">
+            <a class="btn btn btn-success" href="{% url 'users:profile' %}">Профиль</a>
+        </div>
         <form action="{% url 'users:logout' %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-success">Выйти</button>

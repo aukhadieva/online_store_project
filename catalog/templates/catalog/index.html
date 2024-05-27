@@ -6,7 +6,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="row align-items-md-stretch mb-5">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
             <h2>Как продать свои книги?</h2>
             <h6><b>Выбери ненужные книги дома</b></h6>
@@ -17,13 +17,6 @@
                 выпадающего списка, а также описать сюжет вашей книги.</p>
             <a href="{% url 'catalog:create_product' %}" class="btn btn-outline-secondary">Заполнить карточку
                 участника</a>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-            <h2>Стань соавтором нашего блога!</h2>
-            <p>Заполни необходимые поля и твой пост будет опубликован на нашем сайте!</p>
-            <a href="{% url 'blog:create_post' %}" class="btn btn-outline-secondary">Предложить пост...</a>
         </div>
     </div>
 </div>
@@ -51,23 +44,4 @@
     </div>
 </div>
 <br>
-
-<!--<div class="p-2 mb-5 bg-body-tertiary rounded-3">-->
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-8">-->
-<!--                <h1 class="display-5">Традиции русской прозы</h1>-->
-<!--                <br>-->
-<!--                <p class="col-md-11">Восхищаться слогом, задумываться над смыслом и проводить время с удовольствием-->
-<!--                    — собрали лучшие произведения, написанные российскими авторами. С 19 по 25 апреля 2024 г.-->
-<!--                    пополняйте свою библиотеку, экономя до 85%!</p>-->
-<!--                <a class="btn btn-outline-success" href="{% url 'catalog:view_product' pk=21 %}">За покупками!</a>-->
-<!--            </div>-->
-<!--            <div class="col-4">-->
-<!--                <img src="{% static 'images/sale_0.jpg' %}" height="250" class="card-img-top" alt="...">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<br>-->
 {% endblock %}

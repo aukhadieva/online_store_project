@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
 from catalog.models import Contact, Product, Category, Version
 from utils import TitleMixin
 
@@ -23,8 +24,7 @@ class ProductCreateView(TitleMixin, LoginRequiredMixin, CreateView):
     form_class = ProductForm
     success_url = reverse_lazy('catalog:store')
     title = 'Создание продукта'
-    login_url = reverse_lazy('users:login')
-    
+
     def form_valid(self, form):
         """
         Привязывает продукт к текущему пользователю.
@@ -40,7 +40,6 @@ class ProductUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
     form_class = ProductForm
     success_url = reverse_lazy('catalog:store')
     title = 'Редактирование продукта'
-    login_url = reverse_lazy('users:login')
 
     def get_success_url(self):
         """
@@ -75,12 +74,20 @@ class ProductUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner or user.is_superuser:
+            return ProductForm
+        if (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
+                user.has_perm('catalog.change_category')):
+            return ModeratorProductForm
+        raise PermissionDenied
+
 
 class ProductDeleteView(TitleMixin, LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:store')
     title = 'Удаление продукта'
-    login_url = reverse_lazy('users:login')
 
 
 class ProductDetailView(TitleMixin, DetailView):
@@ -113,6 +120,12 @@ class ProductListView(TitleMixin, ListView):
         """
         context_data = super().get_context_data(*args, **kwargs)
         context_data['categories'] = Category.objects.all()
+
+        user = self.request.user
+        published_products = Product.objects.filter(is_published=True).distinct()
+        if not (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
+                user.has_perm('catalog.change_category')):
+            context_data['object_list'] = published_products
         return context_data
 
 
