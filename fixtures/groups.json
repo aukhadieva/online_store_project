@@ -469,5 +469,18 @@
             49
         ]
     }
+},
+{
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "Content-manager",
+        "permissions": [
+            37,
+            38,
+            39,
+            40
+        ]
+    }
 }
 ]
