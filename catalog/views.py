@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
+from catalog.forms import VersionForm, ModeratorProductForm, ProductForm
 from catalog.models import Contact, Product, Category, Version
 from utils import TitleMixin
 
@@ -75,6 +75,9 @@ class ProductUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def get_form_class(self):
+        """
+        Возвращает форму исходя из прав пользователя.
+        """
         user = self.request.user
         if user == self.object.owner or user.is_superuser:
             return ProductForm
