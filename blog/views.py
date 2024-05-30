@@ -22,6 +22,9 @@ class BlogPostListView(TitleMixin, ListView):
     title = 'Блог'
 
     def get_queryset(self, *args, **kwargs):
+        """
+        Отображает только посты с флагом is_published.
+        """
         queryset = super().get_queryset(*args, **kwargs)
         queryset = queryset.filter(is_published=True)
         return queryset
@@ -33,9 +36,16 @@ class BlogPostDetailView(TitleMixin, DetailView):
     slug_url_kwarg = 'slug'
 
     def get_title(self):
+        """
+        Возвращает заголовок страницы.
+        """
         return self.object.title
 
     def get_object(self, queryset=None):
+        """
+        Увеличивает количество просмотров поста
+        и отправляет письмо автору поста при 100 просмотрах.
+        """
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
@@ -55,6 +65,9 @@ class BlogPostUpdateView(TitleMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'blog.change_blogpost'
 
     def get_success_url(self):
+        """
+        Формирует url для перенаправления после редактирования поста.
+        """
         blog_post = self.get_object()
         return reverse('blog:view_post', args=[blog_post.slug])
 

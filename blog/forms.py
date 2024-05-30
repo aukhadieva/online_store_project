@@ -5,6 +5,9 @@ from utils import StyleMixin
 
 
 class BlogPostForm(StyleMixin, forms.ModelForm):
+    """
+    Форма для создания и редактирования поста в блоге.
+    """
 
     class Meta:
         model = BlogPost
