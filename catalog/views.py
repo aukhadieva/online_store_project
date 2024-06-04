@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render
@@ -7,6 +9,7 @@ from django.views.generic import TemplateView, DetailView, ListView, CreateView,
 
 from catalog.forms import VersionForm, ModeratorProductForm, ProductForm
 from catalog.models import Contact, Product, Category, Version
+from catalog.services import get_product_from_cache, get_category_from_cache
 from utils import TitleMixin
 
 
@@ -113,8 +116,14 @@ class ProductListView(TitleMixin, ListView):
         """
         Возвращает список продуктов, отфильтрованных по категории (при применении фильтра).
         """
-        queryset = super().get_queryset()
+        queryset = get_product_from_cache()
         category_id = self.kwargs.get('category_id')
+
+        user = self.request.user
+        if not (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
+                user.has_perm('catalog.change_category')):
+            queryset = queryset.filter(is_published=True)
+
         return queryset.filter(category_id=category_id) if category_id else queryset
 
     def get_context_data(self, *args, **kwargs):
@@ -122,12 +131,7 @@ class ProductListView(TitleMixin, ListView):
         Возвращает данные контекста для отображения списка объектов.
         """
         context_data = super().get_context_data(*args, **kwargs)
-        user = self.request.user
-        if not (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
-                user.has_perm('catalog.change_category')):
-            published_products = Product.objects.filter(is_published=True)
-            context_data = super().get_context_data(object_list=published_products, **kwargs)
-        context_data['categories'] = Category.objects.all()
+        context_data['categories'] = get_category_from_cache()
         return context_data
 
 
