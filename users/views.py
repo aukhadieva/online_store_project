@@ -4,9 +4,7 @@ from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
-from django.http import HttpResponse
 from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, TemplateView
@@ -81,7 +79,7 @@ class UserResetPasswordView(TitleMixin, TemplateView):
                 token = secrets.token_hex(10)
                 link = f'{DOMAIN_NAME}/users'
                 if User.objects.filter(email=user.email).exists():
-                    subject = f'Восстановление пароля'
+                    subject = 'Восстановление пароля'
                     message = (f'Для восстановления доступа к личному кабинет пройдите по ссылке: {link} '
                                f'и воспользуйтесь временным паролем:\n {token}')
                     send_mail(

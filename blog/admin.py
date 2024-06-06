@@ -9,4 +9,3 @@ class BlogPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'body',)
     list_filter = ('is_published',)
     prepopulated_fields = {'slug': ('title',)}
-
