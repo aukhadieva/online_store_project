@@ -50,7 +50,7 @@ class EmailVerification(models.Model):
         """
         link = reverse('users:verify', kwargs={'email': self.user.email, 'key': self.key})
         verification_link = f'{DOMAIN_NAME}{link}'
-        subject = f'Подтверждение учетной записи'
+        subject = 'Подтверждение учетной записи'
         message = f'Для подтверждения регистрации пройдите по ссылке:\n {verification_link}'
         send_mail(
             subject=subject,

@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render
@@ -8,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import VersionForm, ModeratorProductForm, ProductForm
-from catalog.models import Contact, Product, Category, Version
+from catalog.models import Contact, Product, Version
 from catalog.services import get_product_from_cache, get_category_from_cache
 from utils import TitleMixin
 
@@ -84,8 +82,8 @@ class ProductUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user == self.object.owner or user.is_superuser:
             return ProductForm
-        if (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
-                user.has_perm('catalog.change_category')):
+        if (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc')
+                and user.has_perm('catalog.change_category')):
             return ModeratorProductForm
         raise PermissionDenied
 
@@ -120,8 +118,8 @@ class ProductListView(TitleMixin, ListView):
         category_id = self.kwargs.get('category_id')
 
         user = self.request.user
-        if not (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc') and
-                user.has_perm('catalog.change_category')):
+        if not (user.has_perm('catalog.set_published_status') and user.has_perm('catalog.change_prod_desc')
+                and user.has_perm('catalog.change_category')):
             queryset = queryset.filter(is_published=True)
 
         return queryset.filter(category_id=category_id) if category_id else queryset
